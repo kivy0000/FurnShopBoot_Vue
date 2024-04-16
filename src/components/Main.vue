@@ -1,19 +1,141 @@
 <template>
-<div id="main_style">
-  <el-button type="plain">main</el-button>
-</div>
+  <div style="flex: 1">
+    <el-input
+        v-model="select_text"
+        style="width: 240px;margin-right: 5px" maxlength="10" placeholder="请输入搜索条件" show-word-limit type="text"/>
+    <el-button style="margin-right: 10px">查找</el-button>
+    <el-button>新增</el-button>
+      <el-table :data="tableData" border  class="table_style" >
+        <el-table-column prop="id" label="ID" width="60px" align="center"/>
+        <el-table-column prop="name" label="名称" align="center" width="280px"/>
+        <el-table-column prop="product_id" label="产品番号" align="center" width="240px"/>
+        <el-table-column prop="production_time" label="制作时间" align="center" width="240px"/>
+        <el-table-column prop="init_time" label="入库时间" align="center" width="240px"/>
+        <el-table-column prop="Inventory" label="库存" width="90px" align="center"/>
+        <el-table-column prop="sales" label="销量" width="90px" align="center"/>
+        <el-table-column label="操作"  align="center">
+          <template #default="scope">
+            <el-button @click="handleEdit(scope.row)" link >编辑</el-button>
+            <el-button link>删除</el-button>
+            <el-button link>导出</el-button>
+            <!--    自定义提示内容-->
+            <!--        {{scope.row.date}}-->
+          </template>
+        </el-table-column>
+      </el-table>
+    <!--  <p>{{tableData[0]}}</p>-->
+  </div>
 
 </template>
 
 <script>
+import {ref} from 'vue';
+
 export default {
-  name: "Main"
+  name: "Main",
+  setup() {
+    //数据表数组，可以使用循环/索引来提取
+    const tableData = ref([
+      {
+        id: 102,
+        name: 'RTGC07A',
+        product_id: 'UIDW12186781',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 112,
+        name: 'RTGC07A',
+        product_id: 'UIDW12186781',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 122,
+        name: 'RTGC07A',
+        product_id: 'UIDW12156831',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 132,
+        name: 'RTGC07A',
+        product_id: 'UIDW12262345',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 142,
+        name: 'RTGC07A',
+        product_id: 'UIDW13543535',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 152,
+        name: 'RTGC07A',
+        product_id: 'UIDW12235466',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 162,
+        name: 'RTGC07A',
+        product_id: 'UIDW12196867',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 172,
+        name: 'RTGC07A',
+        product_id: 'UIDW12196867',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 182,
+        name: 'RTGC07A',
+        product_id: 'UIDW12196867',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },{
+        id: 192,
+        name: 'RTGC07A',
+        product_id: 'UIDW12196867',
+        production_time: '2022/1/1',
+        init_time: '2022/1/1',
+        Inventory: 718,
+        sales: 42,
+      },
+
+    ]);
+
+    //搜索关键字
+    const select_text = ref("1");
+
+    return {
+      tableData,
+      select_text,
+    };
+  }
 }
 </script>
 
 <style scoped>
-#main_style{
+
+.table_style {
+  margin-top: 20px;
   flex: 1;
-  display: flex;
+  font-size: small;
 }
 </style>

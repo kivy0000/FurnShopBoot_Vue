@@ -8,7 +8,7 @@ const routes = [
     component: HomeView
   },
   //view的另一种引用方式
-  // {
+  //
   //   path: '/about',
   //   name: 'about',
   //   // route level code-splitting

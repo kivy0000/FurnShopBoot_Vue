@@ -9,4 +9,8 @@
     4.display: flex和flex: 1 可以针对不同的父元素和子元素循环使用
     5.如果出现页面拉动后，样式出现问题，可以设置max/min-height/width
     
+五.当前项目布局：
+    app.vue包含：HomeView（通过路由）
+    HomeView包含：Header aside main 三个vue（通过el容器和路由）
+    
     

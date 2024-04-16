@@ -5,50 +5,50 @@
         background-color="#545c64"
         default-active="1"
         text-color="#fff"
-        style="flex: 1"
+        style="flex: 1;"
     >
-      <el-sub-menu index="1">
-        <template #title>
+      <el-sub-menu index="1" style="margin-top: 15px;">
+        <template #title >
           <el-icon>
             <location/>
           </el-icon>
-          <span>设备处理1</span>
+          <span >设备处理</span>
         </template>
         <el-menu-item index="1-1">item one</el-menu-item>
         <el-menu-item index="1-2">item two</el-menu-item>
         <el-menu-item index="1-3">item three</el-menu-item>
         <el-menu-item index="1-4">item one</el-menu-item>
       </el-sub-menu>
-      <el-sub-menu index="2">
+      <el-sub-menu index="2" style="margin-top: 15px;">
         <template #title>
           <el-icon>
             <location/>
           </el-icon>
-          <span>设备处理2</span>
+          <span>结构调整</span>
         </template>
         <el-menu-item index="2-1">item one</el-menu-item>
         <el-menu-item index="2-2">item two</el-menu-item>
         <el-menu-item index="2-3">item three</el-menu-item>
         <el-menu-item index="2-4">item one</el-menu-item>
       </el-sub-menu>
-      <el-sub-menu index="3">
+      <el-sub-menu index="3" style="margin-top: 15px;">
         <template #title>
           <el-icon>
             <location/>
           </el-icon>
-          <span>设备处理3</span>
+          <span>算法维护</span>
         </template>
         <el-menu-item index="3-1">item one</el-menu-item>
         <el-menu-item index="3-2">item two</el-menu-item>
         <el-menu-item index="3-3">item three</el-menu-item>
         <el-menu-item index="3-4">item one</el-menu-item>
       </el-sub-menu>
-      <el-sub-menu index="4">
+      <el-sub-menu index="4" style="margin-top: 15px;">
         <template #title>
           <el-icon>
             <location/>
           </el-icon>
-          <span>设备处理4</span>
+          <span>维护建议</span>
         </template>
         <el-menu-item index="4-1">item one</el-menu-item>
         <el-menu-item index="4-2">item two</el-menu-item>
@@ -77,4 +77,11 @@ export default {
   min-height: 800px;
 
 }
+span{
+  font-size: initial;
+  font-family: "Microsoft YaHei UI";
+}
+
+
+
 </style>
