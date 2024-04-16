@@ -16,8 +16,8 @@
         <el-table-column label="操作"  align="center">
           <template #default="scope">
             <el-button @click="handleEdit(scope.row)" link >编辑</el-button>
-            <el-button link>删除</el-button>
-            <el-button link>导出</el-button>
+            <el-button link >导出</el-button>
+            <el-button link type="danger" >删除</el-button>
             <!--    自定义提示内容-->
             <!--        {{scope.row.date}}-->
           </template>
@@ -64,56 +64,56 @@ export default {
         id: 132,
         name: 'RTGC07A',
         product_id: 'UIDW12262345',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },{
         id: 142,
         name: 'RTGC07A',
         product_id: 'UIDW13543535',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },{
         id: 152,
         name: 'RTGC07A',
         product_id: 'UIDW12235466',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },{
         id: 162,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },{
         id: 172,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },{
         id: 182,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },{
         id: 192,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
-        production_time: '2022/1/1',
-        init_time: '2022/1/1',
+        production_time: '2022/1/1 13:28:16',
+        init_time: '2022/1/1 13:28:16',
         Inventory: 718,
         sales: 42,
       },

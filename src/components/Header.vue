@@ -18,7 +18,7 @@
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>账号信息</el-dropdown-item>
-                          <!--这里提示账号信息，不自动关闭 -->
+           <!--这里提示账号信息，不自动关闭 -->
             <el-dropdown-item>
               <router-link to="/"> 退出登录</router-link>
             </el-dropdown-item>
