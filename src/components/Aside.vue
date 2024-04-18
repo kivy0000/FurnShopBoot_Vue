@@ -5,7 +5,7 @@
         background-color="#545c64"
         default-active="1"
         text-color="#fff"
-        style="flex: 1;"
+        style="flex: 1;height: auto"
     >
       <el-sub-menu index="1" style="margin-top: 15px;">
         <template #title >

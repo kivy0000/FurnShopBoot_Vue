@@ -1,10 +1,17 @@
 <template>
-  <div style="flex: 1">
-    <el-input
-        v-model="select_text"
-        style="width: 240px;margin-right: 5px" maxlength="10" placeholder="请输入搜索条件" show-word-limit type="text"/>
-    <el-button style="margin-right: 10px">查找</el-button>
-    <el-button>新增</el-button>
+  <el-container>
+    <el-header>
+      <div>
+        <el-input
+            v-model="select_text"
+            style="width: 240px;height: 35px;margin-right: 5px" maxlength="10" placeholder="请输入搜索条件" show-word-limit type="text"/>
+        <el-button style="height: 35px">查找</el-button>
+        <el-button style="margin-left: 20px;height: 35px;">新增</el-button>
+      </div>
+    </el-header>
+
+    <el-main>
+      <div style="margin-top: -20px">
       <el-table :data="tableData" border  class="table_style" >
         <el-table-column prop="id" label="ID" width="60px" align="center"/>
         <el-table-column prop="name" label="名称" align="center" width="280px"/>
@@ -23,8 +30,14 @@
           </template>
         </el-table-column>
       </el-table>
-    <!--  <p>{{tableData[0]}}</p>-->
-  </div>
+    </div>
+    </el-main>
+  </el-container>
+
+
+
+
+
 
 </template>
 
@@ -134,8 +147,11 @@ export default {
 <style scoped>
 
 .table_style {
-  margin-top: 20px;
   flex: 1;
   font-size: small;
+}
+.test_nextid{
+  margin-right: 30px;
+  display: flex;
 }
 </style>
