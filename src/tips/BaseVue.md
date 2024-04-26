@@ -14,7 +14,8 @@
     7.如果需要调用子组件的方法，可以通过在已渲染的组件（如 <Main></Main>，<component :is="componentName"></component>）上
         设置ref属性，通过ref值.value.其他组件方法（），来调用
       如果需要调用父组件的方法
-        基础页面构建，搭载页面方法
+    
+    
     
 五.当前项目布局：
     app.vue包含：HomeView（通过路由）
