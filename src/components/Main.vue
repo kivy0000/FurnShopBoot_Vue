@@ -1,157 +1,86 @@
 <template>
-  <el-container>
-    <el-header>
-      <div>
-        <el-input
-            v-model="select_text"
-            style="width: 240px;height: 35px;margin-right: 5px" maxlength="10" placeholder="请输入搜索条件" show-word-limit type="text"/>
-        <el-button style="height: 35px">查找</el-button>
-        <el-button style="margin-left: 20px;height: 35px;">新增</el-button>
-      </div>
-    </el-header>
-
-    <el-main>
-      <div style="margin-top: -20px">
-      <el-table :data="tableData" border  class="table_style" >
-        <el-table-column prop="id" label="ID" width="60px" align="center"/>
-        <el-table-column prop="name" label="名称" align="center" width="280px"/>
-        <el-table-column prop="product_id" label="产品番号" align="center" width="240px"/>
-        <el-table-column prop="production_time" label="制作时间" align="center" width="240px"/>
-        <el-table-column prop="init_time" label="入库时间" align="center" width="240px"/>
-        <el-table-column prop="Inventory" label="库存" width="90px" align="center"/>
-        <el-table-column prop="sales" label="销量" width="90px" align="center"/>
-        <el-table-column label="操作"  align="center">
-          <template #default="scope">
-            <el-button @click="handleEdit(scope.row)" link >编辑</el-button>
-            <el-button link >导出</el-button>
-            <el-button link type="danger" >删除</el-button>
-            <!--    自定义提示内容-->
-            <!--        {{scope.row.date}}-->
-          </template>
-        </el-table-column>
-      </el-table>
+  <div style="flex: 1;min-width: 1310px;min-height: 590px">
+    <div  v-if=mainDialog>
+      <el-page-header @back="goBack" title="回首页"  >
+        <template #content>
+          <!--       使用span容器标签来拼合     -->
+          <span style="font-size: 15px;font-family: 'Microsoft YaHei UI'"> {{ pageTitle }} </span>
+        </template>
+      </el-page-header>
     </div>
-    </el-main>
-  </el-container>
+    <el-button  @click="changeModol">切换组件</el-button>
+    <div style="margin-top: 15px">
+      <!--  二级+三级路由写法  -->
+<!--      <router-view v-is="urlComponents"></router-view>-->
+<!--   组件写法   -->
+      <component name="childComponent" :is="urlComponents"></component>
+    </div>
 
-
-
-
-
+  </div>
 
 </template>
 
 <script>
 import {ref} from 'vue';
+import {useRouter, useRoute} from 'vue-router'
+import DemoMain from "@/components/mains/DemoMain";
+
 
 export default {
   name: "Main",
+  components: {
+    DemoMain,
+  },
+
   setup() {
-    //数据表数组，可以使用循环/索引来提取
-    const tableData = ref([
-      {
-        id: 102,
-        name: 'RTGC07A',
-        product_id: 'UIDW12186781',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 112,
-        name: 'RTGC07A',
-        product_id: 'UIDW12186781',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 122,
-        name: 'RTGC07A',
-        product_id: 'UIDW12156831',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 132,
-        name: 'RTGC07A',
-        product_id: 'UIDW12262345',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 142,
-        name: 'RTGC07A',
-        product_id: 'UIDW13543535',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 152,
-        name: 'RTGC07A',
-        product_id: 'UIDW12235466',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 162,
-        name: 'RTGC07A',
-        product_id: 'UIDW12196867',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 172,
-        name: 'RTGC07A',
-        product_id: 'UIDW12196867',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 182,
-        name: 'RTGC07A',
-        product_id: 'UIDW12196867',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },{
-        id: 192,
-        name: 'RTGC07A',
-        product_id: 'UIDW12196867',
-        production_time: '2022/1/1 13:28:16',
-        init_time: '2022/1/1 13:28:16',
-        Inventory: 718,
-        sales: 42,
-      },
 
-    ]);
+    //等于this.$Router
+    var router = useRouter();
 
-    //搜索关键字
-    const select_text = ref("1");
+    //返回上一页/组件
+    const goBack = () => {
+      /*
+      二级路由写法
+      // router.push('/');
+      // router.go(-1);
+      */
+      //组件写法
+      urlComponents.value = 'DemoMain';
+      mainDialog.value = false;
+    }
+
+
+    const changeModol = () => {
+      /*
+     二级路由写法
+     * router.push(urlComponents.value);
+     */
+      //组件写法
+      urlComponents.value = 'SecondMain';
+      mainDialog.value = true;
+    }
+
+    //选择main显示的子组件
+    const urlComponents = ref('DemoMain');
+
+    //返回上一页选项是否显示
+    const mainDialog = ref(false);
+
+    //标题关键字
+    const pageTitle = ref("设备处理");
+
 
     return {
-      tableData,
-      select_text,
+      urlComponents,
+      pageTitle,
+      goBack,
+      changeModol,
+      mainDialog,
     };
   }
+
 }
 </script>
 
 <style scoped>
-
-.table_style {
-  flex: 1;
-  font-size: small;
-}
-.test_nextid{
-  margin-right: 30px;
-  display: flex;
-}
 </style>

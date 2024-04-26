@@ -1,18 +1,20 @@
 <template>
-  <div class="common-layout" style="display: flex">
+  <div class="common-layout" >
 
     <el-container>
       <el-header>
         <Header/>
       </el-header>
-
       <el-container>
         <el-container>
-          <el-aside>
-            <Aside/>
+          <el-aside style="width: 250px">
+            <Aside />
           </el-aside>
           <el-main>
-            <Main/>
+    <!--二级+三级路由写法-->
+<!--           <router-view></router-view>-->
+<!--      组件写法      -->
+            <Main></Main>
           </el-main>
         </el-container>
         <el-footer>

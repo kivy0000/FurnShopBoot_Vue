@@ -22,5 +22,6 @@ export default {
   text-align: center;
   width: auto;
   font-size: small;
+  /*border-top: 3px solid #ccc;*/
 }
 </style>

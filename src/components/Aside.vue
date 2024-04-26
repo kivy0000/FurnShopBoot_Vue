@@ -1,59 +1,44 @@
-<template>
+<template >
   <div id="aside_style">
+    <!--  默认选中  default-active="1"-->
     <el-menu
         active-text-color="#ffd04b"
         background-color="#545c64"
         default-active="1"
         text-color="#fff"
-        style="flex: 1;height: auto"
+        style="flex: 1;height: auto;text-align:center;"
     >
-      <el-sub-menu index="1" style="margin-top: 15px;">
-        <template #title >
-          <el-icon>
-            <location/>
-          </el-icon>
-          <span >设备处理</span>
-        </template>
-        <el-menu-item index="1-1">item one</el-menu-item>
-        <el-menu-item index="1-2">item two</el-menu-item>
-        <el-menu-item index="1-3">item three</el-menu-item>
-        <el-menu-item index="1-4">item one</el-menu-item>
-      </el-sub-menu>
-      <el-sub-menu index="2" style="margin-top: 15px;">
+      <el-menu-item index="1" class="menuItem">
+        <el-icon>
+          <!--          <icon-menu/>-->
+        </el-icon>
+        <span>设备处理</span>
+      </el-menu-item>
+      <el-menu-item index="2" class="menuItem">
+        <el-icon>
+          <!--          <icon-menu/>-->
+        </el-icon>
+        <span>结构调整</span>
+      </el-menu-item>
+      <el-menu-item index="3" class="menuItem">
         <template #title>
           <el-icon>
-            <location/>
-          </el-icon>
-          <span>结构调整</span>
-        </template>
-        <el-menu-item index="2-1">item one</el-menu-item>
-        <el-menu-item index="2-2">item two</el-menu-item>
-        <el-menu-item index="2-3">item three</el-menu-item>
-        <el-menu-item index="2-4">item one</el-menu-item>
-      </el-sub-menu>
-      <el-sub-menu index="3" style="margin-top: 15px;">
-        <template #title>
-          <el-icon>
-            <location/>
+            <!--          <icon-menu/>-->
           </el-icon>
           <span>算法维护</span>
         </template>
-        <el-menu-item index="3-1">item one</el-menu-item>
-        <el-menu-item index="3-2">item two</el-menu-item>
-        <el-menu-item index="3-3">item three</el-menu-item>
-        <el-menu-item index="3-4">item one</el-menu-item>
-      </el-sub-menu>
-      <el-sub-menu index="4" style="margin-top: 15px;">
-        <template #title>
+      </el-menu-item>
+      <el-sub-menu index="4">
+        <template #title >
           <el-icon>
-            <location/>
           </el-icon>
-          <span>维护建议</span>
+          <span  class="subMenuItem">计算属性</span>
         </template>
-        <el-menu-item index="4-1">item one</el-menu-item>
-        <el-menu-item index="4-2">item two</el-menu-item>
-        <el-menu-item index="4-3">item three</el-menu-item>
-        <el-menu-item index="4-4">item one</el-menu-item>
+
+        <el-menu-item index="4-1" class="childMenuItem">模板语法</el-menu-item>
+        <el-menu-item index="4-2" class="childMenuItem">条件渲染</el-menu-item>
+        <el-menu-item index="4-3" class="childMenuItem">生命周期</el-menu-item>
+        <el-menu-item index="4-4" class="childMenuItem">模板引用</el-menu-item>
       </el-sub-menu>
 
     </el-menu>
@@ -61,11 +46,16 @@
 </template>
 
 <script>
-
+import {ref} from 'vue';
+import {useRouter, useRoute} from 'vue-router'
 
 export default {
   name: "Aside",
-  components: {}
+  components: {},
+  setup() {
+
+    return {}
+  }
 }
 </script>
 
@@ -74,14 +64,35 @@ export default {
   padding-left: 12px;
   padding-top: 12px;
   display: flex;
-  min-height: 800px;
+  flex: 1;
+  height: 100%;
+  width: 250px;
 
 }
-span{
-  font-size: initial;
-  font-family: "Microsoft YaHei UI";
+
+.menuItem,.subMenuItem {
+  text-align: center;
+  color: white;
+  margin-bottom: 15px;
+  margin-left: 15px;
+  font-size: medium;
+  letter-spacing: 5px;
+  font-family: "等线";
+}
+.subMenuItem{
+  font-size: 16px;
 }
 
+
+.childMenuItem {
+  text-align: center;
+  color: #cccccc;
+  margin-bottom: 10px;
+  margin-left: 28px;
+  font-size: small;
+  letter-spacing: 5px;
+  font-family: "等线";
+}
 
 
 </style>

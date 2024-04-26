@@ -14,7 +14,7 @@
         <el-button type="info" style="width: 80px;margin-top: 20px;font-size: small;background-color: #545c64;">
           <el-icon class="el-icon--right" style="margin: auto;font-style: initial;">账号管理</el-icon>
         </el-button>
-        <arrow-down/>
+
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item>账号信息</el-dropdown-item>
