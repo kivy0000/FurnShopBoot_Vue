@@ -1,45 +1,21 @@
-<template >
+<template>
   <div id="aside_style">
     <!--  默认选中  default-active="1"-->
     <el-menu
         active-text-color="#ffd04b"
         background-color="#545c64"
-        default-active="1"
         text-color="#fff"
         style="flex: 1;height: auto;text-align:center;"
     >
-      <el-menu-item index="1" class="menuItem">
-        <el-icon>
-          <!--          <icon-menu/>-->
-        </el-icon>
-        <span>设备处理</span>
-      </el-menu-item>
-      <el-menu-item index="2" class="menuItem">
-        <el-icon>
-          <!--          <icon-menu/>-->
-        </el-icon>
-        <span>结构调整</span>
-      </el-menu-item>
-      <el-menu-item index="3" class="menuItem">
-        <template #title>
-          <el-icon>
-            <!--          <icon-menu/>-->
-          </el-icon>
-          <span>算法维护</span>
-        </template>
-      </el-menu-item>
-      <el-sub-menu index="4">
-        <template #title >
-          <el-icon>
-          </el-icon>
-          <span  class="subMenuItem">计算属性</span>
-        </template>
+      <!--    循环生成菜单，将当前行的标题数据和将要跳转的组件名传递到方法中 -->
+      <el-menu-item :index="item.index" class="menuItem" v-for="item in asideData" :key="item"
+                    @click="changeMainView(item.name,item.targetComponent)">
+        <template #default="scope">
+          <el-icon></el-icon>
+          {{ item.name }}
 
-        <el-menu-item index="4-1" class="childMenuItem">模板语法</el-menu-item>
-        <el-menu-item index="4-2" class="childMenuItem">条件渲染</el-menu-item>
-        <el-menu-item index="4-3" class="childMenuItem">生命周期</el-menu-item>
-        <el-menu-item index="4-4" class="childMenuItem">模板引用</el-menu-item>
-      </el-sub-menu>
+        </template>
+      </el-menu-item>
 
     </el-menu>
   </div>
@@ -52,9 +28,72 @@ import {useRouter, useRoute} from 'vue-router'
 export default {
   name: "Aside",
   components: {},
-  setup() {
 
-    return {}
+  //事件触发数组
+  emits: [
+    'changeMain'
+  ],
+
+  setup(props, ctx) {
+
+    //侧栏数组
+    const asideData = ref(
+        [{
+          name: '设备处理',
+          targetComponent: 'DemoMain',
+          index: '1'
+        }, {
+          name: '结构调整',
+          targetComponent: 'DemoMain',
+          index: '2'
+        }, {
+          name: '算法维护',
+          targetComponent: 'DemoMain',
+          index: '3'
+        },
+          {
+            name: '计算属性',
+            targetComponent: 'DemoMain',
+            index: '4',
+          },
+          {
+            name: '模板语法',
+            targetComponent: 'DemoMain',
+            index: '5',
+          }, {
+          name: '条件渲染',
+          targetComponent: 'DemoMain',
+          index: '6',
+        }, {
+          name: '生命周期',
+          targetComponent: 'DemoMain',
+          index: '7',
+        }, {
+          name: '模板引用',
+          targetComponent: 'DemoMain',
+          index: '8',
+        },
+
+        ])
+
+    //输出方法
+    const sout = (dates) => {
+      console.log(dates)
+    }
+
+
+    //使用事件触发父组件homeviewde的 @changeMain="changeMainVue" 方法，再调用main的changeModol方法
+    const changeMainView = (title, targetComponent) => {
+      ctx.emit('changeMain',targetComponent, title);
+      console.log('触发事件')
+    }
+
+
+    return {
+      sout,
+      asideData,
+      changeMainView,
+    }
   }
 }
 </script>
@@ -68,30 +107,17 @@ export default {
   height: 100%;
   width: 250px;
 
+
 }
 
-.menuItem,.subMenuItem {
+.menuItem {
   text-align: center;
   color: white;
-  margin-bottom: 15px;
+  margin-top: 8px;
   margin-left: 15px;
-  font-size: medium;
-  letter-spacing: 5px;
-  font-family: "等线";
-}
-.subMenuItem{
   font-size: 16px;
-}
-
-
-.childMenuItem {
-  text-align: center;
-  color: #cccccc;
-  margin-bottom: 10px;
-  margin-left: 28px;
-  font-size: small;
   letter-spacing: 5px;
-  font-family: "等线";
+  font-family: 'Microsoft YaHei UI', monospace;
 }
 
 

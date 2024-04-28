@@ -16,7 +16,6 @@
 
       </div>
     </el-header>
-
     <el-main>
       <div>
         <el-table :data="tableData" border class="table_style">
@@ -44,12 +43,16 @@
 </template>
 
 <script>
-import {ref} from 'vue';
+import {ref, inject} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
 
 export default {
   name: "DemoMain",
-  setup() {
+  setup(props, ctx) {
+
+    //向其他组件传值
+    // const mynum = inject('mynum');
+
     //数据表数组，可以使用循环/索引来提取
     const tableData = ref([
       {

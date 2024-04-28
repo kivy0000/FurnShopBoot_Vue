@@ -1,6 +1,6 @@
 <template>
   <div class="foot_style">
-    <p>版权所有 © 2024 AutoGoose</p>
+    <p>版权所有 © 2024 AutoIKunGoose</p>
     <p>备案号：京审备案字JS1457531134543</p>
   </div>
 
@@ -22,6 +22,6 @@ export default {
   text-align: center;
   width: auto;
   font-size: small;
-  /*border-top: 3px solid #ccc;*/
+  border-top: 3px solid #ccc;
 }
 </style>

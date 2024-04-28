@@ -1,8 +1,5 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '../views/HomeView.vue'
-import DemoMain from "@/components/mains/DemoMain";
-import Main from "@/components/Main";
-import SecondMain from "@/components/mains/SecondMain";
 
 
 const routes = [
@@ -22,11 +19,7 @@ const routes = [
         //             name: 'demoMain',
         //             component: DemoMain,
         //         },
-        //         {
-        //             path: 'secondMain',
-        //             name: 'secondMain',
-        //             component: SecondMain,
-        //         },
+        //
         //
         //     ],
         // }]
@@ -34,7 +27,7 @@ const routes = [
     },
 
 
-    //view的另一种引用方式
+    //view的另一种引用方式,函数式
     //
     //   path: '/about',
     //   name: 'about',
