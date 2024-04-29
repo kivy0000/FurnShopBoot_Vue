@@ -2,13 +2,11 @@
   <el-container>
     <el-header style="height: 30px">
       <div>
-
         <div class="mt-4 text-sm font-bold">
           <keep-alive>
             <el-input
-                v-model="select_text"
-                style="width: 240px;height: 35px;margin-right: 10px" maxlength="10" placeholder="请输入搜索条件"
-                show-word-limit type="text"/>
+                v-model="select_text" class="select_text_style" maxlength="10"
+                placeholder="请输入搜索条件" show-word-limit type="text"/>
           </keep-alive>
           <el-button style="height: 35px">查找</el-button>
           <el-button style="margin-left: 20px;height: 35px;">新增</el-button>
@@ -16,23 +14,22 @@
 
       </div>
     </el-header>
-    <el-main>
+    <el-main style="flex: 1">
       <div>
         <el-table :data="tableData" border class="table_style">
-          <el-table-column prop="id" label="ID" width="60px" align="center"/>
-          <el-table-column prop="name" label="名称" align="center" width="240px"/>
-          <el-table-column prop="product_id" label="产品番号" align="center" width="240px"/>
+          <el-table-column prop="id" label="ID" align="center" width="80px" />
+          <el-table-column prop="name" label="名称" align="center" width="260px"/>
+          <el-table-column prop="product_id" label="产品番号" align="center" width="260px"/>
           <el-table-column prop="production_time" label="制作时间" align="center" width="240px"/>
           <el-table-column prop="init_time" label="入库时间" align="center" width="240px"/>
-          <el-table-column prop="Inventory" label="库存" width="90px" align="center"/>
-          <el-table-column prop="sales" label="销量" width="90px" align="center"/>
-          <el-table-column label="操作" align="center" width="240px">
+          <el-table-column prop="Inventory" label="库存"  align="center" width="90px"/>
+          <el-table-column prop="sales" label="销量" align="center" width="90px"/>
+          <el-table-column label="操作" align="center">
             <template #default="scope">
               <el-button @click="handleEdit(scope.row)" link>编辑</el-button>
               <el-button link>导出</el-button>
-              <el-button link type="danger" disabled>删除</el-button>
-              <!--    自定义提示内容-->
-              <!--        {{scope.row.date}}-->
+              <!--   隐藏删除键/根据权限判断-->
+              <el-button link type="danger" disabled style="visibility: initial">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -50,7 +47,7 @@ export default {
   name: "DemoMain",
   setup(props, ctx) {
 
-    //向其他组件传值
+    //读取其他组件传的值
     // const mynum = inject('mynum');
 
     //数据表数组，可以使用循环/索引来提取
@@ -187,14 +184,14 @@ export default {
 <style scoped>
 
 .table_style {
-  max-width: 1440px;
   display: flex;
   flex: 1;
   font-size: small;
 }
 
-.test_nextid {
-  margin-right: 30px;
-  display: flex;
+.select_text_style {
+  width: 240px;
+  height: 35px;
+  margin-right: 10px
 }
 </style>

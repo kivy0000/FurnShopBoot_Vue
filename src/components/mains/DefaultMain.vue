@@ -18,13 +18,16 @@ export default {
   components: []
 }
 </script>
-
+<!--可视化提供-->
 <style scoped>
 .tipsText {
   margin-bottom: 5px;
+  margin-left: 10px;
   font-size: large;
   font-family: 'Microsoft YaHei UI', monospace;
   color: #545c64;
-  letter-spacing: 4px;
+  letter-spacing: 6px;
+  line-height: 30px;
+  /*font-weight: bold;*/
 }
 </style>

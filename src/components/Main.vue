@@ -1,5 +1,7 @@
 <template>
-  <div style="flex: 1;min-width: 1310px;min-height: 590px;">
+
+  <div style="flex: 1;min-width: 1310px;min-height: 590px;z-index: 1;">
+
     <div v-if=mainDialog>
       <el-page-header @back="goBack" title="回首页">
         <template #content>
@@ -9,7 +11,7 @@
       </el-page-header>
     </div>
 
-    <div style="margin-top: 15px;">
+    <div style="margin-top: 8px;">
       <!--  二级+三级路由写法  -->
       <!--      <router-view v-is="urlComponents"></router-view>-->
       <!--   组件写法   -->
@@ -97,4 +99,5 @@ export default {
 </script>
 
 <style scoped>
+
 </style>

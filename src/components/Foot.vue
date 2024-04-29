@@ -1,7 +1,7 @@
 <template>
   <div class="foot_style">
     <p>版权所有 © 2024 AutoIKunGoose</p>
-    <p>备案号：京审备案字JS1457531134543</p>
+    <p>备案号：京审备案字JS1457531131798</p>
   </div>
 
 </template>

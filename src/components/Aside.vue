@@ -1,19 +1,39 @@
 <template>
   <div id="aside_style">
     <!--  默认选中  default-active="1"-->
-    <el-menu
-        active-text-color="#ffd04b"
-        background-color="#545c64"
-        text-color="#fff"
-        style="flex: 1;height: auto;text-align:center;"
-    >
-      <!--    循环生成菜单，将当前行的标题数据和将要跳转的组件名传递到方法中 -->
-      <el-menu-item :index="item.index" class="menuItem" v-for="item in asideData" :key="item"
-                    @click="changeMainView(item.name,item.targetComponent)">
-        <template #default="scope">
-          <el-icon></el-icon>
-          {{ item.name }}
+    <el-menu background-color="#424f63" text-color="#fff" style="flex: 1;height: auto;text-align:center;">
 
+      <!--    循环生成菜单，将当前行的标题数据和将要跳转的组件名传递到方法中 class="is-loading" 2秒内旋转360-->
+      <el-menu-item :index="item.index" class="menuItem" v-for="item in asideData" :key="item"
+                    @click="changeMainView(item.name,item.targetComponent)"
+                    v-on:mouseover="handleMouseOver(item.index)"
+                    v-on:mouseleave="handleMouseLeave(item.index)">
+        <template #default="scope">
+          <el-icon :class="runAround[item.index]" v-if="item.index == 1">
+            <Menu/>
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 2">
+            <Orange />
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 3">
+            <Compass />
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 4">
+            <PieChart />
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 5">
+            <InfoFilled />
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 6">
+            <HelpFilled/>
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 7">
+            <QuestionFilled/>
+          </el-icon>
+          <el-icon :class="runAround[item.index]" v-if="item.index == 8">
+              <Setting/>
+          </el-icon>
+          {{ item.name }}
         </template>
       </el-menu-item>
 
@@ -24,6 +44,7 @@
 <script>
 import {ref} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
+
 
 export default {
   name: "Aside",
@@ -84,8 +105,22 @@ export default {
 
     //使用事件触发父组件homeviewde的 @changeMain="changeMainVue" 方法，再调用main的changeModol方法
     const changeMainView = (title, targetComponent) => {
-      ctx.emit('changeMain',targetComponent, title);
-      console.log('触发事件')
+      ctx.emit('changeMain', targetComponent, title);
+      console.log('触发父组件事件：changeMain')
+    }
+
+    //转圈圈类字符,共八个
+    const runAround = ref(['', '', '', '', '', '', '', '',]);
+
+
+    //转圈圈事件处理,鼠标悬浮
+    const handleMouseOver = (index) => {
+      (runAround.value)[index] = 'is-loading';
+
+    }
+    //转圈圈事件处理,鼠标离开
+    const handleMouseLeave = (index) => {
+      (runAround.value)[index] = '';
     }
 
 
@@ -93,6 +128,10 @@ export default {
       sout,
       asideData,
       changeMainView,
+      handleMouseOver,
+      handleMouseLeave,
+      runAround,
+
     }
   }
 }
@@ -113,11 +152,12 @@ export default {
 .menuItem {
   text-align: center;
   color: white;
-  margin-top: 8px;
+  margin-top: 5px;
   margin-left: 15px;
   font-size: 16px;
-  letter-spacing: 5px;
-  font-family: 'Microsoft YaHei UI', monospace;
+  letter-spacing: 7px;
+  font-family: "等线";
+
 }
 
 
