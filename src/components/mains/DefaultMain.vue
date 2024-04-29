@@ -18,7 +18,6 @@ export default {
   components: []
 }
 </script>
-<!--可视化提供-->
 <style scoped>
 .tipsText {
   margin-bottom: 5px;
