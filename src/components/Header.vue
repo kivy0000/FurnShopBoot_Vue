@@ -3,7 +3,7 @@
 
     <div class="header_second_title-style">
       <el-icon :size="26">
-        <Platform />
+        <Platform/>
       </el-icon>
       Product lifecycle management system
     </div>
@@ -22,11 +22,15 @@
       </el-button>
       <el-button link class="header_button" style="margin-right: 25px">
 
-        <el-icon><TrendCharts /></el-icon>
+        <el-icon>
+          <TrendCharts/>
+        </el-icon>
         调整
       </el-button>
       <el-button link class="header_button" style="margin-right: 25px">
-        <el-icon><List /></el-icon>
+        <el-icon>
+          <List/>
+        </el-icon>
         订单
       </el-button>
       <el-button link class="header_button" style="margin-right: 25px">
@@ -35,28 +39,26 @@
         </el-icon>
         其他内容
       </el-button>
+
     </div>
     <div style="padding-right: 10px;">
       <!--   登录后   -->
-      <el-dropdown v-if="true"> <!--  true：应使用验证参数，放在homeview里面，使用inject和provide进行全局调用  -->
+      <el-dropdown v-if="systemUser!=null" > <!--  true：应使用验证参数，放在homeview里面，使用inject和provide进行全局调用  -->
         <el-button type="info" style="width: 100px;margin-top: 20px;font-size: small;background-color: #424f63;">
           <el-icon :size="18">
             <User style="margin-right: 2px"/>
           </el-icon>
-          个人中心
+          {{ systemUser.username }}
         </el-button>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>账号信息</el-dropdown-item>
-            <!--这里提示账号信息，不自动关闭 -->
-            <el-dropdown-item>
-              <router-link to="/">退出登录</router-link>
-            </el-dropdown-item>
+            <el-dropdown-item @click="userMessage">账号信息</el-dropdown-item>
+            <el-dropdown-item style="color: darkblue" @click="userleave">退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
       <!--   登陆前   -->
-      <el-dropdown v-else="false">
+      <el-dropdown v-else="systemUser!=null">
         <el-button type="info" style="width: 100px;margin-top: 20px;font-size: small;background-color: #424f63;">
           <el-icon class="el-icon--right" style="margin: auto;font-style: initial;font-weight: bold">登录/注册</el-icon>
         </el-button>
@@ -75,26 +77,92 @@
 </template>
 
 <script>
-import {ref} from 'vue';
+import {ref, inject} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
+import {ElMessage, ElMessageBox} from 'element-plus'
+import {ElNotification} from 'element-plus'
 
 export default {
   name: "Header",
   components: [],
   setup() {
+
+    //读取其他组件传的值
+    const systemUser = inject('systemUser');
+
     //返回首页
     const goBack = () => {
       /*二级路由写法*/
       router.push('/');
       // router.go(-1);
-      //组件写法
+      elSout("返回首页", 'success');
     }
+
+
+    //账号信息
+    const userMessage = () => {
+      elOpen('账号信息', '欢迎您:  ' + systemUser.value.username, 'success');
+    }
+
+    //退出登录
+    const userleave = () => {
+      ElMessageBox.confirm(
+          '确认退出登录？',
+          {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+            icon: 'UserFilled',
+          }
+      ).then(
+          () => {
+            elOpen('退出登录', systemUser.value.username + '  已退出登录', 'warning');
+            systemUser.value = null;
+            //跳转回登录/注册界面
+          }
+      )
+          .catch(
+              () => {
+                elSout('取消', 'info');
+              }
+          )
+
+
+    }
+
+
+    //消息通知
+    const elSout = (mMessage, mType) => {
+      ElMessage({
+        message: mMessage,
+        type: mType,
+        center: true,
+        duration: 3000,
+        showClose: true,
+        grouping: true,
+
+
+      })
+    }
+    const elOpen = (mTitle, mMessage, mType) => {
+      ElNotification({
+        title: mTitle,
+        message: mMessage,
+        type: mType,
+        offset: 100,
+      })
+    }
+
     //=this.$router
     var router = useRouter();
 
-
     return {
       goBack,
+      elSout,
+      systemUser,
+      elOpen,
+      userMessage,
+      userleave,
     }
   }
 }
@@ -109,6 +177,7 @@ export default {
   font-size: large;
   font-family: 黑体;
   font-weight: bold;
+  letter-spacing: 2px;
 
 }
 

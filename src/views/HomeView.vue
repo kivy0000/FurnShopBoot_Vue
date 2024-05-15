@@ -34,7 +34,7 @@ import Header from "@/components/Header";
 import Aside from "@/components/Aside";
 import Main from "@/components/Main";
 import Foot from "@/components/Foot";
-import {ref} from 'vue';
+import {ref, provide} from 'vue';
 
 
 export default {
@@ -46,7 +46,7 @@ export default {
     Foot,
   },
   setup() {
-    //方便父子组件来回调用方法
+    //方便父子组件来回调用方法，使用这四个引用子组件
     const headerRef = ref(null);
     const asideRef = ref(null);
     const mainRef = ref(null);
@@ -57,8 +57,17 @@ export default {
     const changeMainVue = (vueName, newTitle) => {
       console.log('父组件homeview得到事件：@changeMain')
       mainRef.value.changeModol(vueName, newTitle);
-
     }
+
+    //用户信息
+    const systemUser = ref({
+      username: 'ikun',
+      email: '666666@qq.com',
+      pnumber: '1555555555',
+    });
+
+    //向其他组件共享用户信息
+    provide('systemUser', systemUser);
 
     return {
       headerRef,
@@ -66,6 +75,7 @@ export default {
       mainRef,
       footRef,
       changeMainVue,
+      systemUser,
     }
   }
 }
@@ -88,8 +98,6 @@ export default {
 .main_style {
 
 }
-
-
 
 
 </style>

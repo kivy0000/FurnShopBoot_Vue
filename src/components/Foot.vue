@@ -7,9 +7,26 @@
 </template>
 
 <script>
+import { ElMessage } from 'element-plus'
 export default {
   name: "Foot",
-  components: {}
+  components: {},
+  setup(){
+    //消息通知
+    const elSout = (mMessage,mType) => {
+      ElMessage({
+        message: mMessage,
+        type:mType,
+        center:true,
+        duration:3000,
+        showClose:true,
+        grouping: true,
+      })
+    }
+    return{
+      elSout,
+    }
+  }
 }
 </script>
 

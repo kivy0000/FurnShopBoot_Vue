@@ -3,6 +3,7 @@
   <div style="flex: 1;min-width: 1310px;min-height: 590px;z-index: 1;">
 
     <div v-if=mainDialog>
+
       <el-page-header @back="goBack" title="回首页">
         <template #content>
           <!--       使用span容器标签来拼合     -->
@@ -27,6 +28,7 @@ import {ref, provide} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
 import DemoMain from "@/components/mains/DemoMain";
 import DefaultMain from "@/components/mains/DefaultMain";
+import { ElMessage } from 'element-plus'
 
 
 export default {
@@ -38,23 +40,36 @@ export default {
 
   setup() {
 
-    // //传递给其他组件值
-    // provide("mynum", 666)
+    // //传递给其他组件值provide("mynum", 666)
+
+    //消息通知
+    const elSout = (mMessage,mType) => {
+      ElMessage({
+        message: mMessage,
+        type:mType,
+        center:true,
+        duration:3000,
+        showClose:true,
+        grouping: true,
+      })
+    }
+
     //返回上一页/组件
     const goBack = () => {
       /*二级路由写法// router.push('/');// router.go(-1);*/
-      //组件写法
+      /*组件写法*/
       urlComponents.value = 'DefaultMain';
       mainDialog.value = false;
+      elSout("返回首页",'success');
     }
 
     //返回上一页选项是否显示，默认不显示
     const mainDialog = ref(false);
 
-
+    //更改main的二级组件
     const changeModol = (targetComponent, newTitle) => {
       /*
-     二级路由写法
+     二级组件写法
      * router.push(urlComponents.value);
      */
       //组件写法
@@ -67,12 +82,11 @@ export default {
       mainDialog.value = true;
     }
 
-    //选择main默认显示的子组件
+    //main默认显示的子组件
     const urlComponents = ref('DefaultMain');
 
-
     //标题关键字
-    const pageTitle = ref("设备处理");
+    const pageTitle = ref('');
 
     //修改标题
     const changePageTitle = (newTitle) => {
@@ -92,6 +106,7 @@ export default {
       changeModol,
       mainDialog,
       changePageTitle,
+      elSout,
     };
   }
 

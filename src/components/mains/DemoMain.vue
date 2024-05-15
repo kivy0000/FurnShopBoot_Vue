@@ -8,8 +8,11 @@
                 v-model="select_text" class="select_text_style" maxlength="10"
                 placeholder="请输入搜索条件" show-word-limit type="text"/>
           </keep-alive>
-          <el-button style="height: 35px">查找</el-button>
-          <el-button style="margin-left: 20px;height: 35px;">新增</el-button>
+          <el-button style="height: 35px;height: 35px;width: 70px">
+            <el-icon style="margin-right: 2px"><Search /></el-icon>
+             查找
+          </el-button>
+          <el-button style="margin-left: 20px;height: 35px;width: 70px">新增</el-button>
         </div>
 
       </div>
@@ -24,6 +27,7 @@
           <el-table-column prop="init_time" label="入库时间" align="center" width="240px"/>
           <el-table-column prop="Inventory" label="库存"  align="center" width="90px"/>
           <el-table-column prop="sales" label="销量" align="center" width="90px"/>
+          <el-table-column prop="parts" label="分类" align="center" width="90px"/>
           <el-table-column label="操作" align="center">
             <template #default="scope">
               <el-button @click="handleEdit(scope.row)" link>编辑</el-button>
@@ -42,6 +46,7 @@
 <script>
 import {ref, inject} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
+import { ElMessage } from 'element-plus'
 
 export default {
   name: "DemoMain",
@@ -56,6 +61,7 @@ export default {
         id: 102,
         name: 'RTGC07A',
         product_id: 'UIDW12186781',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -64,6 +70,7 @@ export default {
         id: 112,
         name: 'RTGC07A',
         product_id: 'UIDW12186781',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -72,6 +79,7 @@ export default {
         id: 122,
         name: 'RTGC07A',
         product_id: 'UIDW12156831',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -80,6 +88,7 @@ export default {
         id: 132,
         name: 'RTGC07A',
         product_id: 'UIDW12262345',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -88,6 +97,7 @@ export default {
         id: 142,
         name: 'RTGC07A',
         product_id: 'UIDW13543535',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -96,6 +106,7 @@ export default {
         id: 152,
         name: 'RTGC07A',
         product_id: 'UIDW12235466',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -104,6 +115,7 @@ export default {
         id: 162,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -112,6 +124,7 @@ export default {
         id: 172,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -120,6 +133,7 @@ export default {
         id: 182,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -128,6 +142,7 @@ export default {
         id: 192,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -136,6 +151,7 @@ export default {
         id: 192,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -144,6 +160,7 @@ export default {
         id: 192,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -152,6 +169,7 @@ export default {
         id: 192,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -160,6 +178,7 @@ export default {
         id: 192,
         name: 'RTGC07A',
         product_id: 'UIDW12196867',
+        parts: '测试部门',
         production_time: '2022/1/1 13:28:16',
         init_time: '2022/1/1 13:28:16',
         Inventory: 718,
@@ -193,5 +212,10 @@ export default {
   width: 240px;
   height: 35px;
   margin-right: 10px
+}
+*el-icon {
+  size: "18";
+  margin-right: 2px;
+
 }
 </style>
