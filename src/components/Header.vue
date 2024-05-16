@@ -43,7 +43,7 @@
     </div>
     <div style="padding-right: 10px;">
       <!--   登录后   -->
-      <el-dropdown v-if="systemUser!=null" > <!--  true：应使用验证参数，放在homeview里面，使用inject和provide进行全局调用  -->
+      <el-dropdown v-if="systemUser!=null" > <!--  systemUser：使用验证参数，应放在homeview里面，使用inject和provide进行全局调用  -->
         <el-button type="info" style="width: 100px;margin-top: 20px;font-size: small;background-color: #424f63;">
           <el-icon :size="18">
             <User style="margin-right: 2px"/>

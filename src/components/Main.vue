@@ -4,12 +4,21 @@
 
     <div v-if=mainDialog>
 
-      <el-page-header @back="goBack" title="回首页">
-        <template #content>
-          <!--       使用span容器标签来拼合     -->
-          <span style="font-size: 15px;font-family: 'Microsoft YaHei UI'"> {{ pageTitle }} </span>
-        </template>
-      </el-page-header>
+      <el-breadcrumb separator=">" style=
+          "font-size: large;font-family: 楷体;height: 35px;
+          margin-top: 10px;margin-left: 25px;color: #cccccc">
+        <el-breadcrumb-item><a @click="goBack">首页</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>
+      </el-breadcrumb>
+      <!--            <el-page-header @back="goBack" title="回首页" style=-->
+      <!--                "font-size: largeer;font-family: 'Microsoft YaHei UI';height: 35px;margin-top: 10px;margin-left: 25px;">-->
+      <!--              <template #content>-->
+      <!--                &lt;!&ndash;       使用span容器标签来拼合     &ndash;&gt;-->
+      <!--                <span style="font-size: 15px;font-family: 'Microsoft YaHei UI'"> {{ pageTitle }} </span>-->
+      <!--              </template>-->
+      <!--            </el-page-header>-->
     </div>
 
     <div style="margin-top: 8px;">
@@ -28,7 +37,8 @@ import {ref, provide} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
 import DemoMain from "@/components/mains/DemoMain";
 import DefaultMain from "@/components/mains/DefaultMain";
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
+import {ArrowRight} from '@element-plus/icons-vue'
 
 
 export default {
@@ -43,13 +53,13 @@ export default {
     // //传递给其他组件值provide("mynum", 666)
 
     //消息通知
-    const elSout = (mMessage,mType) => {
+    const elSout = (mMessage, mType) => {
       ElMessage({
         message: mMessage,
-        type:mType,
-        center:true,
-        duration:3000,
-        showClose:true,
+        type: mType,
+        center: true,
+        duration: 3000,
+        showClose: true,
         grouping: true,
       })
     }
@@ -60,7 +70,7 @@ export default {
       /*组件写法*/
       urlComponents.value = 'DefaultMain';
       mainDialog.value = false;
-      elSout("返回首页",'success');
+      elSout("返回首页", 'success');
     }
 
     //返回上一页选项是否显示，默认不显示

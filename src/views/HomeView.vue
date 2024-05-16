@@ -87,7 +87,7 @@ export default {
 }
 
 .second_container_style {
-  height: 800px;
+  height: 900px;
   width: 1900px;
 }
 
