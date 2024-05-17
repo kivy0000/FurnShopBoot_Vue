@@ -173,7 +173,6 @@ export default {
     //单项删除
     const deleteRow = (row) => {
       console.log(row)
-      //TODO 删除 单项应使用气泡确认框
     };
 
     //批量删除
