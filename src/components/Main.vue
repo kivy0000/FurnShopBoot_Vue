@@ -1,16 +1,16 @@
 <template>
 
-  <div style="flex: 1;min-width: 1310px;min-height: 590px;z-index: 1;">
+  <div style="flex: 1;height: 760px;width: 1400px">
 
-    <div v-if=mainDialog>
+    <div v-if=mainDialog >
 
       <el-breadcrumb separator=">" style=
-          "font-size: large;font-family: 楷体;height: 35px;
+          "font-size: medium;font-family: 'Microsoft YaHei UI Light';height: 35px;
           margin-top: 10px;margin-left: 25px;color: #cccccc">
-        <el-breadcrumb-item><a @click="goBack">首页</a></el-breadcrumb-item>
-        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>
-        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>
-        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>
+        <el-breadcrumb-item><a  @click="goBack">首页</a></el-breadcrumb-item>
+<!--        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>-->
+<!--        <el-breadcrumb-item><a>{{ pageTitle }}</a></el-breadcrumb-item>-->
+        <el-breadcrumb-item v-if="pageTitle"><a>{{ pageTitle }}</a></el-breadcrumb-item>
       </el-breadcrumb>
       <!--            <el-page-header @back="goBack" title="回首页" style=-->
       <!--                "font-size: largeer;font-family: 'Microsoft YaHei UI';height: 35px;margin-top: 10px;margin-left: 25px;">-->
@@ -21,7 +21,7 @@
       <!--            </el-page-header>-->
     </div>
 
-    <div style="margin-top: 8px;">
+    <div style="margin-top: 8px;flex: 1">
       <!--  二级+三级路由写法  -->
       <!--      <router-view v-is="urlComponents"></router-view>-->
       <!--   组件写法   -->
@@ -29,6 +29,8 @@
     </div>
 
   </div>
+
+
 
 </template>
 
@@ -58,9 +60,9 @@ export default {
         message: mMessage,
         type: mType,
         center: true,
-        duration: 3000,
-        showClose: true,
-        grouping: true,
+        duration: 2500,
+        showClose: false,
+        grouping: false,
       })
     }
 

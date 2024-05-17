@@ -9,7 +9,7 @@
       <!--   二级容器   -->
       <el-container>
         <!--   三级容器   -->
-        <el-container class="second_container_style">
+        <el-container class="thrid_container_style">
           <el-aside class="aside_style">
             <Aside ref="asideRef" @changeMain="changeMainVue"/>
           </el-aside>
@@ -23,6 +23,8 @@
           <Foot ref="footRef"/>
         </el-footer>
       </el-container>
+      <!--   回顶部   -->
+      <el-backtop :right="100" :bottom="100"/>
     </el-container>
 
   </div>
@@ -55,7 +57,7 @@ export default {
 
     //更改主页组件
     const changeMainVue = (vueName, newTitle) => {
-      console.log('父组件homeview得到事件：@changeMain')
+      console.log('父组件homeview得到事件：@' + vueName)
       mainRef.value.changeModol(vueName, newTitle);
     }
 
@@ -86,16 +88,19 @@ export default {
   min-width: 1500px;
 }
 
-.second_container_style {
-  height: 900px;
-  width: 1900px;
+.thrid_container_style {
+  flex: 1;
 }
 
 .aside_style {
   width: 250px;
+  margin-left: 8px;
+  margin-top: 2px;
 }
 
 .main_style {
+  display: flex;
+  height: 800;
 
 }
 

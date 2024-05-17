@@ -8,42 +8,50 @@
       Product lifecycle management system
     </div>
     <div style="padding-right: 30px">
+      <el-button link class="header_button" @click="elOpen('北京时间' ,nowTime,'success')"
+                 style="margin-right: 25px">
+        <el-icon style="margin-right: 5px">
+          <Watch />
+        </el-icon>
+        {{ nowTime }}
+      </el-button>
       <el-button link class="header_button" @click="goBack" style="margin-right: 25px">
         <el-icon>
           <HomeFilled/>
         </el-icon>
         首页
       </el-button>
-      <el-button link class="header_button" style="margin-right: 25px">
+      <el-button link class="header_button" @click="elSout('拒绝协同')" style="margin-right: 25px">
         <el-icon>
           <Avatar/>
         </el-icon>
         协同
       </el-button>
-      <el-button link class="header_button" style="margin-right: 25px">
+      <el-button link class="header_button" @click="elSout('拒绝调整')" style="margin-right: 25px">
 
         <el-icon>
           <TrendCharts/>
         </el-icon>
         调整
       </el-button>
-      <el-button link class="header_button" style="margin-right: 25px">
+      <el-button link class="header_button" @click="elSout('订单拒绝')" style="margin-right: 25px">
         <el-icon>
           <List/>
         </el-icon>
         订单
       </el-button>
-      <el-button link class="header_button" style="margin-right: 25px">
+      <el-button link class="header_button" @click="elSout('其他拒绝')" style="margin-right: 25px">
         <el-icon>
           <Grid/>
         </el-icon>
         其他内容
       </el-button>
 
+
     </div>
     <div style="padding-right: 10px;">
       <!--   登录后   -->
-      <el-dropdown v-if="systemUser!=null" > <!--  systemUser：使用验证参数，应放在homeview里面，使用inject和provide进行全局调用  -->
+      <el-dropdown v-if="systemUser!=null"> <!--  systemUser：使用验证参数，应放在homeview里面，使用inject和provide进行全局调用  -->
         <el-button type="info" style="width: 100px;margin-top: 20px;font-size: small;background-color: #424f63;">
           <el-icon :size="18">
             <User style="margin-right: 2px"/>
@@ -77,7 +85,7 @@
 </template>
 
 <script>
-import {ref, inject} from 'vue';
+import {ref, inject, watch} from 'vue';
 import {useRouter, useRoute} from 'vue-router'
 import {ElMessage, ElMessageBox} from 'element-plus'
 import {ElNotification} from 'element-plus'
@@ -137,26 +145,54 @@ export default {
         message: mMessage,
         type: mType,
         center: true,
-        duration: 3000,
-        showClose: true,
-        grouping: true,
+        duration: 2500,
+        showClose: false,
+        grouping: false,
 
 
       })
     }
+
+    //右侧账号提示消息通知
     const elOpen = (mTitle, mMessage, mType) => {
       ElNotification({
         title: mTitle,
         message: mMessage,
         type: mType,
         offset: 100,
+        duration: 3000,
       })
     }
+
+    //实时显示当前时间
+    const nowTime = ref(new Date().toLocaleString('default', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+      hour12: false
+    }));
+
+    // 更新时间
+    setInterval(() => {
+      nowTime.value = new Date().toLocaleString('default', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        hour12: false
+      });
+    }, 1000);
 
     //=this.$router
     var router = useRouter();
 
     return {
+      nowTime,
       goBack,
       elSout,
       systemUser,

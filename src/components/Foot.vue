@@ -20,7 +20,7 @@ export default {
         center:true,
         duration:3000,
         showClose:true,
-        grouping: true,
+        grouping: false,
       })
     }
     return{

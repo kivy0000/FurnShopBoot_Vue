@@ -2,7 +2,7 @@ const { defineConfig } = require('@vue/cli-service')
 module.exports = defineConfig({
   transpileDependencies: true
 })
-
+//解决跨域问题
 module.exports = {
   devServer: {
     port: 9090, //配置启动端口

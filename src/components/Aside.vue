@@ -1,13 +1,14 @@
 <template>
   <div id="aside_style">
     <!--  默认选中  default-active="1"-->
-    <el-menu background-color="#424f63" text-color="#fff" style="flex: 1;height: auto;text-align:center;">
+    <el-menu background-color="#424f63" text-color="#fff" style="flex: 1;text-align:center;">
 
       <!--    循环生成菜单，将当前行的标题数据和将要跳转的组件名传递到方法中 class="is-loading" 2秒内旋转360-->
       <el-menu-item :index="item.index" class="menuItem" v-for="item in asideData" :key="item"
                     @click="changeMainView(item.targetComponent,item.name)"
                     v-on:mouseover="handleMouseOver(item.index)"
                     v-on:mouseleave="handleMouseLeave(item.index)">
+<!--     根据不同index显示   -->
         <template #default="scope">
           <el-icon :class="runAround[item.index]" v-if="item.index == 1">
             <Menu/>
@@ -105,8 +106,8 @@ export default {
         message: mMessage,
         type: mType,
         center: true,
-        duration: 3000,
-        showClose: true,
+        duration: 2500,
+        showClose: false,
         grouping: true,
       })
     }
