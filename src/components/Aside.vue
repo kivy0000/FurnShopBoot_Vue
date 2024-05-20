@@ -116,7 +116,6 @@ export default {
     //使用事件触发父组件homeviewde的 @changeMain="changeMainVue" 方法，再调用main的changeModol方法
     const changeMainView = (targetComponent, title) => {
       ctx.emit('changeMain', targetComponent, title);
-      elSout(title, 'success');
     }
 
     //转圈圈类字符,共八个

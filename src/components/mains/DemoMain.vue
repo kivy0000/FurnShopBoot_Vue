@@ -8,7 +8,7 @@
           <keep-alive>
             <el-input
                 v-model="select_text" class="select_text_style" maxlength="10"
-                placeholder="请输入搜索条件" show-word-limit type="text"/>
+                placeholder="请输入搜索条件：名称/番号" show-word-limit type="text"/>
           </keep-alive>
 
           <el-button style="height: 35px;height: 35px;width: 78px">
@@ -79,7 +79,12 @@
     <!--  主内容区  -->
     <el-main>
       <div>
-        <el-table :data="tableData" border class="table_style" height="650px" @selection-change="handleSelectionChange">
+        <!--   没有数据时，会显示为加载中动画-->
+        <el-table :data="tableData" border
+                  class="table_style" height="650px"
+                  @selection-change="handleSelectionChange"
+                  v-loading="tableData.length<=0"
+                  element-loading-text="数据加载中，请稍候...">
           <el-table-column type="selection" width="35px"/>
           <el-table-column prop="id" label="ID" align="center" width="55px"/>
           <el-table-column prop="name" label="名称" align="center" width="200px"/>
@@ -126,130 +131,18 @@ export default {
   components: [],
   created() {
     //初始化表单数据
-    this.flashTableData();
+    try {
+      this.flashTableData();
+    } catch (e) {
+      console.log("初始化失败", 'warning');
+    }
   },
   setup(props, ctx) {
-
-
     //读取其他组件传的值
     // const mynum = inject('mynum');
 
-    //刷新数据表数组tableData,flashTableData()带方法括号
-    const flashTableData = () => {
-      request.get("/api/getAll")
-          .then(res => {
-            tableData.value = res;
-            elSout("表单刷新成功", 'success');
-          })
-          .catch(reason => {
-            console.log(reason);
-            elSout("表单刷新失败，使用默认数据", 'warning')
-          })
-    };
-
-    //数据表数组，可以使用循环/索引来提取
-    const tableData = ref([
-      {
-        id: 102,
-        name: 'RTGC07A',
-        productId: 'UIDW12186781',
-        parts: '测试部门',
-        productionTime: '2022/1/1 13:28:16',
-        initTime: '2022/1/1 13:28:16',
-        inventory: 718,
-        sales: 42,
-      }, {
-        id: 102,
-        name: 'RTGC07A',
-        productId: 'UIDW12186781',
-        parts: '测试部门',
-        productionTime: '2022/1/1 13:28:16',
-        initTime: '2022/1/1 13:28:16',
-        inventory: 718,
-        sales: 42,
-      }
-    ]);
-
-    //单项删除
-    const deleteRow = (row) => {
-      console.log(row)
-    };
-
-    //批量删除
-    const deleteMoreRow = () => {
-      //TODO 批量删除
-      ElMessageBox.confirm
-      (
-          '确定要删除选中项吗?',
-          '警告',
-          {
-            confirmButtonText: '删除',
-            cancelButtonText: '取消',
-            type: 'warning',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '删除成功',
-            });
-            console.log(selectionTableData.value);
-            flashTableData();
-          })
-          .catch(() => {
-            //  继续编辑
-            ElMessage({
-              type: 'info',
-              message: '取消删除',
-            });
-          })
-
-
-    };
-
-    //单行导出
-    const exportRow = (row) => {
-      console.log(row);
-    }
-
-    //批量导出
-    const exportMoreRow = () => {
-      //TODO 批量导出
-      ElMessageBox.confirm(
-          '要导出选中项吗?',
-          '提示',
-          {
-            confirmButtonText: '导出',
-            cancelButtonText: '取消',
-            type: 'info',
-          }
-      )
-          .then(() => {
-            ElMessage({
-              type: 'success',
-              message: '导出成功',
-            });
-            console.log(selectionTableData.value);
-          })
-          .catch(() => {
-            //  继续编辑
-            ElMessage({
-              type: 'info',
-              message: '取消导出',
-            });
-          })
-
-
-    };
-
-    //动态获取选中的行
-    const handleSelectionChange = (selection) => {
-      selectionTableData.value = selection;
-      console.log(selectionTableData.value);
-    }
-
-    //选中的行
-    const selectionTableData = ref();
+    //用于接收动态选中的行
+    const selectionTableData = ref([]);
 
     //搜索关键字
     const select_text = ref('');
@@ -301,6 +194,132 @@ export default {
     //弹窗按钮加载画面是否显示
     const loading = ref(false);
 
+    //路由
+    var router = useRouter();
+
+    //刷新数据表数组tableData,flashTableData()带方法括号
+    const flashTableData = () => {
+      request.get("/api/getAll")
+          .then(res => {
+            tableData.value = res;
+          })
+          .catch(reason => {
+            console.log(reason);
+          })
+    };
+
+    //数据表数组，可以使用循环/索引来提取
+    const tableData = ref([
+      //两组测试数据
+      // {
+      //   id: 102,
+      //   name: 'RTGC07A',
+      //   productId: 'UIDW12186781',
+      //   parts: '测试部门',
+      //   productionTime: '2022/1/1 13:28:16',
+      //   initTime: '2022/1/1 13:28:16',
+      //   inventory: 718,
+      //   sales: 42,
+      // }, {
+      //   id: 102,
+      //   name: 'RTGC07A',
+      //   productId: 'UIDW12186781',
+      //   parts: '测试部门',
+      //   productionTime: '2022/1/1 13:28:16',
+      //   initTime: '2022/1/1 13:28:16',
+      //   inventory: 718,
+      //   sales: 42,
+      // }
+    ]);
+
+    //单项删除
+    const deleteRow = (row) => {
+      console.log(row);
+      request.delete("/api/deleteProduct", {data: row})
+          .then(res => {
+            console.log(res);
+            elSout("删除成功", 'success');
+            flashTableData();
+          })
+          .catch(reason => {
+            console.log(reason);
+            elSout("删除失败", 'warning');
+          });
+    };
+
+    /**
+     *     批量删除
+     */
+    const deleteMoreRow = () => {
+      if (selectionTableData.value.length == 0) {
+        elSout('请选择要删除的项', 'warning');
+        return;
+      }
+      ElMessageBox.confirm
+      ('确定要删除选中项吗?',
+          '警告',
+          {
+            confirmButtonText: '删除',
+            cancelButtonText: '取消',
+            type: 'warning',
+          })
+
+          //确认要删除
+          .then(() => {
+            //生成ids集合
+            let ids = [];
+            for (let i = 0; i < selectionTableData.value.length; i++) {
+              ids.push(selectionTableData.value[i].id);
+            }
+            //发送请求，携带ids集合
+            request.delete("api/deleteMoreProduct", {data: ids})
+                .then(res => {
+                  elSout('批量删除成功', 'success');
+                  console.log("res=", res);
+                  flashTableData();
+                })
+                .catch(reason => {
+                  elSout('批量删除失败', 'warning');
+                  console.log("reason=", reason);
+                })
+          })
+          .catch(() => {
+            //误触，取消批量删除
+            ElMessage({
+              type: 'info',
+              message: '取消删除',
+            });
+          })
+
+
+    };
+
+    /**
+     * 单行导出
+     * */
+    const exportRow = (row) => {
+      console.log("导出数据：", row);
+    }
+
+    /**
+     *     批量导出
+     */
+    const exportMoreRow = () => {
+      if (selectionTableData.value.length == 0) {
+        elSout('请选择要导出的项', 'warning');
+        return;
+      }
+      console.log("批量导出数据：", row);
+    };
+
+    /**
+     * 动态获取选中的行
+     * @param selection el-table自动获取选中行
+     */
+    const handleSelectionChange = (selection) => {
+      selectionTableData.value = selection;
+      console.log("当前选中的行", selectionTableData.value);
+    }
 
     //点击其他位置退出弹窗的提示
     const handleClose = () => {
@@ -356,9 +375,6 @@ export default {
     }
 
 
-    //路由
-    var router = useRouter();
-
     return {
       tableData,
       selectionTableData,
@@ -391,7 +407,7 @@ export default {
 }
 
 .select_text_style {
-  width: 240px;
+  width: 280px;
   height: 35px;
   margin-right: 10px
 }
