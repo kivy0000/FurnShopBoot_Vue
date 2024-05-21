@@ -105,8 +105,7 @@ export default {
       // router.go(-1);
       elSout("返回首页", 'success');
     }
-
-
+    
     //账号信息
     const userMessage = () => {
       elOpen('账号信息', '欢迎您:  ' + systemUser.value.username, 'success');

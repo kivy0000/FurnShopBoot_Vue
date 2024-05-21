@@ -1,6 +1,6 @@
 <template>
 
-  <div style="flex: 1;height: 760px;width: 1400px">
+  <div style="flex: 1;height: 770px;width: 1400px">
 
     <div v-if=mainDialog >
 
