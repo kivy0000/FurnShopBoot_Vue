@@ -105,7 +105,7 @@ export default {
       // router.go(-1);
       elSout("返回首页", 'success');
     }
-    
+
     //账号信息
     const userMessage = () => {
       elOpen('账号信息', '欢迎您:  ' + systemUser.value.username, 'success');
@@ -232,7 +232,7 @@ export default {
   font-weight: bold;
   color: #545c64;
   font-family: 'Microsoft YaHei UI';
-  font-size: 28px;
+  font-size: 25px;
 }
 
 * el-icon {

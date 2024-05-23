@@ -67,7 +67,8 @@
                 <el-button v-if=" drawerFormTitles.msg == '添加'" type="primary" :loading="loading" @click="addProduct()">
                   {{ drawerFormTitles.msg }}
                 </el-button>
-                <el-button v-else=" drawerFormTitles.msg == '添加'" type="primary" :loading="loading" @click="doHandleEdit()">{{
+                <el-button v-else=" drawerFormTitles.msg == '添加'" type="primary" :loading="loading"
+                           @click="doHandleEdit()">{{
                     drawerFormTitles.msg
                   }}
                 </el-button>
@@ -248,11 +249,12 @@ export default {
     const doHandleEdit = () => {
       console.log(drawerForm.value);
       //提交修改
-      request.put("api/editProduct", {data: drawerForm.value})
+      request.put("api/editProduct", drawerForm.value)
           .then(res => {
             console.log(res);
             elSout(res.code == '200' ? "修改成功" : "无修改，请检查", res.msg);
             flashTableData();
+            drawer.value = !(res.code == '200') ;
           })
           .catch(reason => {
             elSout("异常导致修改失败", "error");
