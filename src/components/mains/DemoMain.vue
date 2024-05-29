@@ -11,7 +11,7 @@
                 placeholder="请输入搜索条件：名称/番号" show-word-limit type="text"/>
           </keep-alive>
 
-          <el-button style="height: 35px;height: 35px;width: 78px" @click="selectByText">
+          <el-button style="height: 35px;width: 78px" @click="selectByText">
             <el-icon style="margin-right: 2px" size="15px" class="is-loading" v-if="selectLoading">
               <Loading/>
             </el-icon>
@@ -20,12 +20,15 @@
             </el-icon>
             查找
           </el-button>
-          <!--   更改弹窗标题       -->
-          <el-button @click="drawer = true;drawerFormTitles.title = '添加数据';drawerFormTitles.msg = '添加'"
-                     style="margin-left: 30px;height: 35px;width: 78px">新增
+          <!--   更改弹窗标题,清空校验规则(未写入)drawerFormRef.resetFields();       -->
+          <el-button @click="drawer = true;drawerFormTitles.title = '添加数据';drawerFormTitles.msg = '添加';"
+                     style="margin-left: 30px;height: 35px;width: 78px">
+            新增
           </el-button>
-          <el-button @click="deleteMoreRow" style="margin-left: 10px;height: 35px;width: 78px">批量删除</el-button>
           <el-button @click="exportMoreRow" style="margin-left: 10px;height: 35px;width: 78px">批量导出</el-button>
+          <el-button @click="deleteMoreRow" style="margin-left: 10px;height: 35px;width: 78px;" type="danger" plain>
+            批量删除
+          </el-button>
         </div>
         <!--     右弹窗   -->
         <el-drawer v-model="drawer" :before-close="handleClose">
@@ -34,27 +37,28 @@
             <p style="font-size: large;font-family: 黑体;font-weight: bolder;letter-spacing: 2px;">
               {{ drawerFormTitles.title }}</p>
           </template>
-
           <!--     右弹窗表单   -->
+          <!--     :model="drawerForm" 代表表单数据   -->
+          <!--     ref="drawerFormRef" 代表整个表单,包括验证方法和api等   -->
           <template #default>
-            <el-form :model="drawerForm" label-width="auto" style="max-width: 600px">
-              <el-form-item label="名称">
+            <el-form :model="drawerForm" ref="drawerFormRef" label-width="auto" style="max-width: 600px" :rules="rules">
+              <el-form-item label="名称" prop="name">
                 <el-input v-model="drawerForm.name"/>
               </el-form-item>
-              <el-form-item label="番号">
+              <el-form-item label="番号" prop="productId">
                 <el-input v-model="drawerForm.productId"/>
               </el-form-item>
-              <el-form-item label="制作时间">
+              <el-form-item label="制作时间" prop="productionTime">
                 <el-date-picker v-model="drawerForm.productionTime" value-format="YYYY-MM-DD HH:mm:ss" type="datetime"
                                 placeholder="Select date and time"/>
               </el-form-item>
-              <el-form-item label="入库数量">
+              <el-form-item label="入库数量" prop="inventory">
                 <el-input v-model="drawerForm.inventory"/>
               </el-form-item>
-              <el-form-item label="销量">
+              <el-form-item label="销量" prop="sales">
                 <el-input v-model="drawerForm.sales"/>
               </el-form-item>
-              <el-form-item label="部门">
+              <el-form-item label="部门" prop="parts">
                 <el-select placeholder="选择你的部门" v-model="drawerForm.parts">
                   <el-option label="技术部" value="技术部"/>
                   <el-option label="测试部" value="测试部"/>
@@ -64,10 +68,10 @@
                 </el-select>
               </el-form-item>
               <el-form-item>
-                <el-button v-if=" drawerFormTitles.msg == '添加'" type="primary" :loading="loading" @click="addProduct()">
+                <el-button v-if=" drawerFormTitles.msg === '添加'" type="primary" :loading="loading" @click="addProduct()">
                   {{ drawerFormTitles.msg }}
                 </el-button>
-                <el-button v-else=" drawerFormTitles.msg == '添加'" type="primary" :loading="loading"
+                <el-button v-else=" drawerFormTitles.msg === '添加'" type="primary" :loading="loading"
                            @click="doHandleEdit()">{{
                     drawerFormTitles.msg
                   }}
@@ -91,11 +95,11 @@
     <el-main>
       <div>
         <!--   没有数据时，会显示为加载中动画-->
-        <el-table :data="tableData" border class="table_style" max-height="620px"
+        <el-table :data="tableData" border class="table_style" height="620px"
                   @selection-change="handleSelectionChange" v-loading="tableData.length<=0"
-                  element-loading-text="数据加载中，请稍候...">
+                  element-loading-text="数据加载中，请稍候..." stripe :row-style="{ height: '58px' }">
           <el-table-column type="selection" width="35px"/>
-          <el-table-column prop="id" label="ID" align="center" width="55px"/>
+          <el-table-column prop="id" label="ID" align="center" width="58px"/>
           <el-table-column prop="name" label="名称" align="center" width="200px"/>
           <el-table-column prop="productId" label="产品番号" align="center" width="360px"/>
           <el-table-column prop="productionTime" label="制作时间" align="center" width="260px"/>
@@ -110,6 +114,7 @@
                          link>
                 编辑
               </el-button>
+              <!--        TODO excel表格操作      -->
               <el-button @click="exportRow(scope.row)" link>导出</el-button>
 
               <el-popconfirm title="确认删除？" @confirm="deleteRow(scope.row)">
@@ -121,7 +126,16 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-pagination small style="margin-top: 15px" background layout="prev, pager, next" :total="1000"/>
+        <el-pagination
+            style="margin-top: 8px"
+            :current-page="paginationItems.pageNum"
+            :page-size="paginationItems.pageSize"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+            :page-sizes="[10,15,20,30]"
+            layout="total, sizes, prev, pager, next"
+            :total="paginationItems.total"
+        />
       </div>
     </el-main>
   </el-container>
@@ -179,63 +193,113 @@ export default {
       // // init_time: '',
     });
 
+    //整个弹窗表单
+    const drawerFormRef = ref();
+
+    //弹窗表单验证规则
+    const rules = ref({
+      name: [
+        {required: true, message: 'Please input Activity name', trigger: 'blur'},
+        {min: 3, max: 8, message: 'Length should be 3 to 8', trigger: 'blur'},
+      ],
+      productId: [
+        {required: true, message: '请输入产品代码', trigger: 'blur'},
+        {min: 3, max: 60, message: '产品代码不能过长/过短', trigger: 'blur'},
+      ],
+      //  使用正则表达式
+      inventory: [
+        {required: true, message: '请输入产品库存', trigger: 'blur'},
+        {pattern: /^(([1-9]\d*)|(0))$/, message: '请输入大于0的整数', trigger: 'blur'},
+      ],
+      sales: [
+        {required: true, message: '请输入销量', trigger: 'blur'},
+        {pattern: /^(([1-9]\d*)|(0))$/, message: '请输入大于0的整数', trigger: 'blur'},
+      ],
+      parts: [
+        {required: true, message: '请选择部门', trigger: 'blur'},
+
+      ],
+      productionTime: [
+        {type: 'date', required: true, message: '选择入库时间', trigger: 'blur'},
+      ],
+    });
+
     //弹窗表单标题
     const drawerFormTitles = ref({
       title: '',
       msg: '',
     });
 
+    //分页组件所需的属性
+    const paginationItems = ref({
+      pageSize: 10,
+      pageNum: 1,
+      total: 30
+    });
+
+
+    //以下是方法------------------------------------------
+
+    //接收分页组件每页大小变更
+    const handleSizeChange = (newPageSize) => {
+      paginationItems.value.pageSize = newPageSize;
+      flashTableData();
+    }
+
+    //接收分页组件页码变更
+    const handleCurrentChange = (newPageNum) => {
+      paginationItems.value.pageNum = newPageNum;
+      flashTableData();
+    }
+
     //提交弹窗表单
     const addProduct = () => {
-      //表单正在提交时，不让提交按钮点击
+      //表单正在提交动画
       loading.value = true;
-      // console.log(drawerForm.value);
-      //发送给后端数据
-      request.post("/api/addProduct/", drawerForm.value).then(res => {
-        console.log('提交信息为', res);
-        //是否添加成功
-        elSout(res.code == '200' ? "添加成功" : "添加失败", res.msg);
-        //刷新数据
-        flashTableData();
-        //无论数据是否提交成功，都应该在结束时设置loading为false，否则会导致弹窗始终无法关闭
-        loading.value = false;
-        drawer.value = false;
-        //重置弹窗表单
-        drawerForm.value = ref({});
-      }).catch(reason => {
-        elSout("添加失败，原因是" + reason, 'error');
-        loading.value = false;
-      });
+      //校验表单数据
+      drawerFormRef.value.validate(valid => {
+        //前端校验通过,正常提交
+        if (valid) {
+          //发送给后端数据
+          request.post("/api/addProduct/", drawerForm.value).then(res => {
+            console.log('提交信息为', res);
+            //后端校验
+            if (res.code === '400') {
+              //后端校验失败,提示
+              elSout("后端校验失败", res.msg);
+              console.log(res.data);
+            } else {
+              //后端校验成功
+              elSout(res.code === '200' ? "添加成功" : "添加失败", res.msg);
+            }
+            //刷新数据
+            flashTableData();
+            //无论数据是否提交成功，都设置loading为false，否则会导致弹窗始终无法关闭
+            loading.value = false;
+            drawer.value = false;
+            //重置弹窗表单
+            drawerForm.value = ref({});
+          }).catch(reason => {
+            elSout("添加失败，原因是" + reason, 'error');
+            loading.value = false;
+          });
+        } else {
+          //校验不通过,不能提交
+
+          elSout("表单校验失败，请检查", 'warning');
+          loading.value = false;
+          return false;
+
+        }
+
+      })
 
 
     }
 
     //按关键字搜索
     const selectByText = () => {
-      //如果没有搜索关键词，还原列表
-      if (select_text.value == '') {
-        flashTableData();
-        return;
-      }
-      //有关键词，进入搜索
-      selectLoading.value = true;
-      request.get("api/selectByText/" + select_text.value)
-          .then(res => {
-            console.log(res);
-            elSout(res.code == '200' ? "查询成功" : "未查询到", res.msg);
-            if (res.code == '200') {
-              tableData.value = res.data;
-            }
-            selectLoading.value = false;
-          })
-          .catch(reason => {
-            console.log(reason);
-            selectLoading.value = false;
-            elSout("异常导致查询失败", 'error');
-          });
-
-      // selectLoading.value = false;
-
+      flashTableData();
     };
 
     //当前行数据提交到表单
@@ -247,20 +311,34 @@ export default {
 
     //真正修改当前行的方法
     const doHandleEdit = () => {
-      console.log(drawerForm.value);
-      //提交修改
-      request.put("api/editProduct", drawerForm.value)
-          .then(res => {
-            console.log(res);
-            elSout(res.code == '200' ? "修改成功" : "无修改，请检查", res.msg);
-            flashTableData();
-            drawer.value = !(res.code == '200') ;
-          })
-          .catch(reason => {
-            elSout("异常导致修改失败", "error");
-            console.log(reason);
-          });
-      // drawerForm.value = ref({});
+      //表单正在提交动画
+      loading.value = true;
+      //校验表单数据
+      drawerFormRef.value.validate(valid => {
+        //校验通过,正常提交
+        if (valid) {
+          //提交修改
+          request.put("api/editProduct", drawerForm.value)
+              .then(res => {
+                console.log(res);
+                elSout(res.code === '200' ? "修改成功" : "无修改，请检查" + res.data, res.msg);
+                flashTableData();
+                drawer.value = !(res.code === '200');
+                loading.value = false;
+              })
+              .catch(reason => {
+                elSout("异常导致修改失败", "error");
+                console.log(reason);
+                loading.value = false;
+
+              });
+        } else {
+          elSout("表单校验失败,请检查", 'warning');
+          loading.value = false;
+          return false;//不提交
+        }
+      });
+
     }
 
     //新增/编辑弹窗是否显示
@@ -271,13 +349,53 @@ export default {
 
     //刷新数据表数组tableData,flashTableData()带方法括号
     const flashTableData = () => {
-      request.get("/api/getAll")
-          .then(res => {
-            tableData.value = res.data;
-          })
-          .catch(reason => {
-            console.log('刷新失败，原因是', reason);
-          })
+      //如果有搜索关键字，进入关键字搜索分页/selectByTextAndPage
+      if (select_text.value != null && select_text.value !== '') {
+        //有关键词，进入搜索
+        selectLoading.value = true;
+        request.get("api/selectByTextAndPage/" + select_text.value, {
+          params: {
+            pageNum: paginationItems.value.pageNum,
+            pageSize: paginationItems.value.pageSize,
+          }
+        })
+            .then(res => {
+              console.log(res);
+              elSout(res.code === '200' ? "查询成功" : "未查询到", res.msg);
+              if (res.code === '200') {
+                //更新数据
+                tableData.value = res.data.records;
+                //获取总页数
+                paginationItems.value.total = res.data.total;
+                console.log( tableData.value);
+              }
+              selectLoading.value = false;
+            })
+            .catch(reason => {
+              console.log(reason);
+              selectLoading.value = false;
+              elSout("异常导致查询失败", 'error');
+            });
+
+      } else {
+        //没有有搜索关键字，进入全部数据分页/getAllByPage
+        request.get("/api/getAllByPage", {
+          params: {
+            pageNum: paginationItems.value.pageNum,
+            pageSize: paginationItems.value.pageSize,
+          }
+        })
+            .then(res => {
+              //更新数据
+              tableData.value = res.data.records;
+              //获取总页数
+              paginationItems.value.total = res.data.total;
+            })
+            .catch(reason => {
+              console.log('刷新失败，原因是', reason);
+            })
+      }
+
     };
 
     //数据表数组，使用循环/索引提取
@@ -289,7 +407,7 @@ export default {
       request.delete("/api/deleteProduct", {data: row})
           .then(res => {
             console.log('删除响应信息为', res);
-            elSout(res.code == '200' ? "删除成功" : "删除失败", res.msg);
+            elSout(res.code === '200' ? "删除成功" : "删除失败", res.msg);
             flashTableData();
           })
           .catch(reason => {
@@ -303,7 +421,7 @@ export default {
      */
     const deleteMoreRow = () => {
       //没有多选，直接返回并提示
-      if (selectionTableData.value.length == 0) {
+      if (selectionTableData.value.length === 0) {
         elSout('请选择要删除的项', 'warning');
         return;
       }
@@ -326,7 +444,7 @@ export default {
             //发送请求，携带ids集合
             request.delete("api/deleteMoreProduct", {data: ids})
                 .then(res => {
-                  elSout(res.code == '200' ? "批量删除成功" : "批量删除失败", res.msg);
+                  elSout(res.code === '200' ? "批量删除成功" : "批量删除失败", res.msg);
                   flashTableData();
                 })
                 .catch(reason => {
@@ -356,11 +474,11 @@ export default {
      *     批量导出
      */
     const exportMoreRow = () => {
-      if (selectionTableData.value.length == 0) {
+      if (selectionTableData.value.length === 0) {
         elSout('请选择要导出的项', 'warning');
         return;
       }
-      console.log("批量导出数据：", row);
+      console.log("批量导出数据：", selectionTableData.value);
     };
 
     /**
@@ -380,7 +498,7 @@ export default {
         return;
       }
       //如果没有任何信息且没有在提交，允许直接关闭
-      if (Object.keys(drawerForm.value).length == 0 && loading.value == false) {
+      if (Object.keys(drawerForm.value).length === 0 && loading.value === false) {
         drawer.value = false;
         return;
       }
@@ -439,13 +557,18 @@ export default {
       select_text,
       selectLoading,
       drawer,
+      rules,
+      drawerFormRef,
       loading,
       drawerFormTitles,
+      paginationItems,
       deleteRow,
       deleteMoreRow,
       exportMoreRow,
       exportRow,
       handleSelectionChange,
+      handleSizeChange,
+      handleCurrentChange,
       flashTableData,
       addProduct,
       handleClose,

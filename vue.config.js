@@ -5,10 +5,10 @@ module.exports = defineConfig({
 //解决跨域问题
 module.exports = {
   devServer: {
-    port: 9090, //配置启动端口
+    port: 9999, //配置启动端口
     proxy: { //拦截器
       '/api': {
-        target: "http://localhost:8989/",//代理目标服务器地址
+        target: "http://localhost:9090/",//代理目标服务器地址，如使用nginx，需要注掉
         changeOrigin: true,//允许跨源
         pathRewrite: {
           '/api': ''

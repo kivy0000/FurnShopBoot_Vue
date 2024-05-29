@@ -158,7 +158,7 @@ export default {
         title: mTitle,
         message: mMessage,
         type: mType,
-        offset: 100,
+        offset: 60,
         duration: 3000,
       })
     }

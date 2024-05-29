@@ -23,9 +23,7 @@ const routes = [
         //
         //     ],
         // }]
-
     },
-
 
     //view的另一种引用方式,函数式
     //
@@ -35,10 +33,6 @@ const routes = [
     //   // this generates a separate chunk (about.[hash].js) for this route
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
-    //界门纲目科属种
-    //动物界节肢动物门甲壳亚门软甲纲口足目虾姑科
-    //动物界节肢动物门甲壳亚门软甲纲十足目虾科
-    //动物界节肢动物门甲壳亚门软甲纲十足目鳌虾科
     // }
 ]
 
